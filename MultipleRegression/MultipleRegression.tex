@@ -1,0 +1,95 @@
+\documentclass{article}
+\title{task2 - Multiple Regression}
+\author{lirenjie95}
+\date{}
+\usepackage{amsmath}
+
+\usepackage{listings}
+\usepackage{color}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\lstset{frame=tb,
+	language=Python,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=3
+}
+
+\begin{document} 
+\maketitle
+\paragraph{(a)}
+\[\begin{aligned}
+E(b_{R}) = &E\left[\left(X'_{1}X_{1}\right)^{-1}X'_{1}y\right]\\
+         = &E\left[\left(X'_{1}X_{1}\right)^{-1}X'_{1}\left(X_{1}\beta_{1} + X_{2}\beta_{2} + \varepsilon\right)\right]\\
+         = &E\left[\left(X'_{1}X_{1}\right)^{-1}X'_{1}X_{1}\beta_{1} + \left(X'_{1}X_{1}\right)^{-1}X'_{1}X_{2}\beta_{2} + \left(X'_{1}X_{1}\right)^{-1}X'_{1}\varepsilon\right]\\
+         = &E\left[\beta_{1} + P\beta_{2} \right]+ \left(X'_{1}X_{1}\right)^{-1}X'_{1}E\left[\varepsilon\right]\\
+         = &\beta_{1} + P\beta_{2} + \left(X'_{1}X_{1}\right)^{-1}X'_{1}\cdot0\\
+         = &\beta_{1} + P\beta_{2}
+\end{aligned}
+\]
+
+\paragraph{(b)}
+\[\begin{aligned}
+var(b_{R}) = &E\left[\left(b_{R} - E\left(b_{R}\right)\right)\left(b_{R} - E\left(b_{R}\right)\right)'\right]\\
+           = &E\left[\left(b_{R} - \beta_{1} - P\beta_{2}\right)\left(b_{R} - \beta_{1} - P\beta_{2}\right)'\right]\\
+           = &E\left[\left(X'_{1}X_{1}\right)^{-1}X'_{1}\varepsilon \cdot \left(\left(X'_{1}X_{1}\right)^{-1}X'_{1}\varepsilon\right)'\right]\\
+           = &E\left[\left(X'_{1}X_{1}\right)^{-1}X'_{1}\varepsilon\varepsilon'X_{1}\left(X'_{1}X_{1}\right)^{-1}\right]\\
+           = &\left(X'_{1}X_{1}\right)^{-1}X'_{1}E\left[\varepsilon\varepsilon'\right]X_{1}\left(X'_{1}X_{1}\right)^{-1}\\
+           = &\left(X'_{1}X_{1}\right)^{-1}X'_{1}\sigma^{2}IX_{1}\left(X'_{1}X_{1}\right)^{-1}\\
+           = &\sigma^{2}\left(X'_{1}X_{1}\right)^{-1}
+\end{aligned}
+\]
+
+\paragraph{(c)}
+\[\begin{aligned}
+b_{R} = &\left(X'_{1}X_{1}\right)^{-1}X'_{1}y\\
+      = &\left(X'_{1}X_{1}\right)^{-1}X'_{1}\left(X_{1}b_{1} + X_{2}b_{2} + e\right)\\
+      = &\left(X'_{1}X_{1}\right)^{-1}X'_{1}X_{1}b_{1} + \left(X'_{1}X_{1}\right)^{-1}X'_{1}X_{2}b_{2} + \left(X'_{1}X_{1}\right)^{-1}X'_{1}e\\
+      = &b_{1} + Pb_{2} + \left(X'_{1}X_{1}\right)^{-1}X'_{1}e
+\end{aligned}
+\]
+In order to prove $b_{R} = b_{1} + Pb_{2}$, we should prove $\left(X'_{1}X_{1}\right)^{-1}X'_{1}e = 0$. And we can find that:
+\[\begin{aligned}
+X'e = &X'(y - Xb)\\
+    = &X'y - X'Xb\\
+    = &X'y - X'X(X'X)^{-1}X'y\\
+    = &0\\
+X = \begin{pmatrix} X_{1} & X_{2} \end{pmatrix} \Rightarrow X' = \begin{pmatrix} X_{1} \\ X_{2} \end{pmatrix}
+\end{aligned}
+\]
+So, $X'e = 0 \Rightarrow X'_{1}e = 0$. $\Rightarrow b_{R} = b_{1} + Pb_{2}$.
+
+\paragraph{(d)}~\\
+$P = \left(X'_{1}X_{1}\right)^{-1}X'_{1}X_{2} (2\times3)$: $X_{1}$ is two columns of vectors(length = 500) of constant term and variable 'Female'; $X_{2}$ is three columns of vectors(length = 500) of variables 'Age', 'Educ' and 'Parttime'.\\
+The first column of $P$: $\left(X'_{1}X_{1}\right)^{-1}X'_{1}Age = OLS$ of 'Ages' on $X_{1}$(constant and 'Female')\\
+The second column of $P$: $\left(X'_{1}X_{1}\right)^{-1}X'_{1}Educ = OLS$ of 'Education' on $X_{1}$\\
+The third column of $P$: $\left(X'_{1}X_{1}\right)^{-1}X'_{1}Parttime = OLS$ of 'Part-time Jobs' on $X_{1}$
+
+\paragraph{(e)}~\\
+\lstinputlisting[language={Python}]{calP.py}
+And then we can get the result: $P = \begin{pmatrix}
+40.05063291 & 2.25949367 & 0.19620253\\
+-0.11041552 & -0.49318932 & 0.24944964
+\end{pmatrix}$
+
+\paragraph{(f)}~\\
+In lecture 2.1: $log(wage_{i}) = 4.73 - 0.25Female_{i} + e_{i}$, so $b_{R} = \begin{pmatrix}4.73\\-0.25\end{pmatrix}$.\\
+In lecture 2.5: $log(wage_{i}) = 3.053 - 0.041Female_{i} + 0.031Age_{i} + 0.233Educ_{i} - 0.365Parttime_{i}+ e_{i}$, so $b_{1} = \begin{pmatrix}3.053\\-0.041\end{pmatrix}$, $b_{2} = \begin{pmatrix}0.031\\0.233\\-0.365\end{pmatrix}$.\\
+\[\begin{aligned}
+b_{1} + Pb_{2} = &\begin{pmatrix}3.053\\-0.041\end{pmatrix} + \begin{pmatrix}40.05063291 & 2.25949367 & 0.19620253\\-0.11041552 & -0.49318932 & 0.24944964\end{pmatrix}\begin{pmatrix}0.031\\0.233\\-0.365\end{pmatrix}\\
+               = &\begin{pmatrix}4.74941772\\-0.25038511\end{pmatrix}\\
+               \approx &b_{R}
+\end{aligned}
+\]
+\end{document}
