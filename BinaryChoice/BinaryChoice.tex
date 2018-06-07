@@ -1,0 +1,77 @@
+\documentclass{article}
+\title{Week5 - Binary Choice}
+\date{}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage[text={200mm,300mm},centering]{geometry}
+
+\begin{document} 
+\maketitle
+
+\paragraph{Questions}
+Consider again the application in lecture 5.5, where we have analyzed response to a direct mailing using the following logit specification
+\[
+Pr[resp_i = 1] = \frac{exp(\beta_0 + \beta_1 male_i + \beta_2 active_i + \beta_3age_i + \beta_4(age_i/10)^2)}
+					{1 + exp(\beta_0 + \beta_1 male_i + \beta_2 active_i + \beta_3age_i + \beta_4(age_i/10)^2)}
+\]
+for $i = 1, \cdots, 925$. The maximum likelihood estimates of the parameters are given by\\
+\begin{center}
+\begin{tabular}{ccccc}
+	\toprule
+	Variable& Coefficient& Std. Error& t-value& p-value\\
+	\midrule
+	Intercept& -2.488& 0.890& -2.796& 0.005\\
+	Male& 0.954& 0.158& 6.029& 0.000\\
+	Active& 0.914& 0.185& 4.945& 0.000\\
+	Age& 0.070& 0.036& 1.964& 0.050\\
+	$(Age/10)^2$& -0.069& 0.034& -2.015& 0.044\\
+	\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{(a)}
+Show that 
+\[
+\frac{\partial Pr[resp_i = 1]}{\partial age_i} + \frac{\partial Pr[resp_i = 0]}{\partial age_i} = 0.
+\]
+
+Answer:
+\[
+\frac{\partial Pr[resp_i = 1]}{\partial age_i} = Pr[resp_i = 1]Pr[resp_i = 0](\beta_3 + 2\beta_4(age_i/10))
+\]
+\[
+\begin{aligned}
+\frac{\partial Pr[resp_i = 0]}{\partial age_i} &= -Pr[resp_i = 0]Pr[resp_i = 0](\frac{\partial exp(\beta_0 + \beta_1 male_i + \beta_2 active_i + \beta_3 age_i + \beta_4(age_i/10)^2)}{\partial age_i})\\ &= -Pr[resp_i = 0]Pr[resp_i = 1](\beta_3 + 2\beta_4(age_i/10))
+\end{aligned}
+\]
+\[
+\Rightarrow \frac{\partial Pr[resp_i = 1]}{\partial age_i} + \frac{\partial Pr[resp_i = 0]}{\partial age_i} = 0.
+\]
+
+\paragraph{(b)}
+Assume that you recode the dependent variable as follows: $resp^{new}_i = -resp_i + 1$. Hence, positive response is now defined to be equal to zero and negative response to be equal to 1. Use the odds ratio to show that this transformation implies that the sign of all parameters change.
+
+Answer:
+let: $\beta_0 + \beta_1 male_i + \beta_2 active_i + \beta_3age_i + \beta_4(age_i/10)^2 = x^T\beta$
+\[
+\frac{Pr[resp_i = 1]}{Pr[resp_i = 0]} = exp(x^T\beta)
+\]
+\[
+\frac{Pr[resp^{new}_i = 1]}{Pr[resp^{new}_i = 0]} = \frac{Pr[resp_i = 0]}{Pr[resp_i = 1]} = \frac{1}{exp(x^T\beta)} = exp(x^T\beta)
+\]
+Because $x^T$ cannot change, the sign of $\beta$ should turn to negative.
+
+\paragraph{(c)}
+Consider again the odds ratio positive response versus negative response:
+\[
+\frac{Pr[respi = 1]}{Pr[respi = 0]} = exp(\beta_0 + \beta_1 male_i + \beta_2 active_i + \beta_3 age_i + \beta_4(age_i/10)^2)
+\]
+During lecture 5.5 you have seen that this odds ratio obtains its maximum value for age equal to 50 years for males as well as females. Suppose now that you want to extend the logit model and allow that this age value is possibly different for males than for females. Discuss how you can extend the logit specification.
+
+Answer:
+Add two items that are related to both age and gender.
+\[
+\frac{Pr[respi = 1]}{Pr[respi = 0]} = exp(\beta_0 + \beta_1 male_i + \beta_2 active_i + \beta_3 age_i + \beta_4(age_i/10)^2 + \beta_5 male_i age_i + \beta_6 male_i(age_i/10)^2)
+\]
+
+\end{document}
