@@ -1,0 +1,974 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{MOOC Econometrics}
+    \date{}
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{Case Project -- House Prices}\label{case-project-house-prices}
+
+\subsection{Background}\label{background}
+
+This project is of an applied nature and uses data that are available in
+the data file \texttt{Capstone-HousePrices}. The source of these data is
+Anglin and Gencay, "Semiparametric Estimation of a Hedonic Price
+Function" (Journal of Applied Econometrics 11, 1996, pages 633-648).
+
+We consider the modeling and prediction of house prices.
+
+Data are available for 546 observations of the following variables:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{sell}: Sale price of the house
+\item
+  \texttt{lot}: Lot size of the property in square feet
+\item
+  \texttt{bdms}: Number of bedrooms
+\item
+  \texttt{fb}: Number of full bathrooms
+\item
+  \texttt{sty}: Number of stores excluding basement
+\item
+  \texttt{drv}: Dummy that is 1 if the house has a driveway and 0
+  otherwise
+\item
+  \texttt{rec}: Dummy that is 1 if the house has a recreational room and
+  0 otherwise
+\item
+  \texttt{ffin}: Dummy that is 1 if the house has a full finished
+  basement and 0 otherwise
+\item
+  \texttt{ghw}: Dummy that is 1 if the house uses gas for hot water
+  heating and 0 otherwise
+\item
+  \texttt{ca}: Dummy that is 1 if there is central air conditioning and
+  0 otherwise
+\item
+  \texttt{gar}: Number of covered garage places
+\item
+  \texttt{reg}: Dummy that is 1 if the house is located in a preferred
+  neighborhood of the city and 0 otherwise
+\item
+  \texttt{obs}: Observation number, needed in part \textbf{(h)}
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{import} \PY{n+nn}{statsmodels}\PY{n+nn}{.}\PY{n+nn}{api} \PY{k}{as} \PY{n+nn}{sm}
+        \PY{k+kn}{import} \PY{n+nn}{statsmodels}\PY{n+nn}{.}\PY{n+nn}{tsa}\PY{n+nn}{.}\PY{n+nn}{stattools} \PY{k}{as} \PY{n+nn}{ts}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        
+        \PY{k+kn}{from} \PY{n+nn}{statsmodels}\PY{n+nn}{.}\PY{n+nn}{formula}\PY{n+nn}{.}\PY{n+nn}{api} \PY{k}{import} \PY{n}{ols}
+        \PY{k+kn}{from} \PY{n+nn}{patsy} \PY{k}{import} \PY{n}{dmatrices}
+        \PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{stats} \PY{k}{import} \PY{n}{f}\PY{p}{,} \PY{n}{chi2}\PY{p}{,} \PY{n}{norm}
+        
+        \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+        
+        \PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k}{as} \PY{n+nn}{sns}
+        \PY{n}{sns}\PY{o}{.}\PY{n}{set}\PY{p}{(}\PY{n}{color\PYZus{}codes}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{n}{houses} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Housing\PYZhy{}Prices.txt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{sep}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{houses}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}2}]:}    obs   sell   lot  bdms  fb  sty  drv  rec  ffin  ghw  ca  gar  reg
+        0    1  42000  5850     3   1    2    1    0     1    0   0    1    0
+        1    2  38500  4000     2   1    1    1    0     0    0   0    0    0
+        2    3  49500  3060     3   1    1    1    0     0    0   0    0    0
+        3    4  60500  6650     3   1    2    1    1     0    0   0    0    0
+        4    5  61000  6360     2   1    1    1    0     0    0   0    0    0
+\end{Verbatim}
+            
+    \subsubsection{Questions}\label{questions}
+
+\textbf{(a)} Consider a linear model where the sale price of a house is
+the dependent variable and the explanatory variables are the other
+variables given above. Perform a test for linearity. What do you
+conclude based on the test result?
+
+    I will include all variables except for \texttt{obs} - it does not make
+sense to include it.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{full\PYZus{}model} \PY{o}{=} \PY{n}{ols}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sell \PYZti{} }\PY{l+s+s1}{\PYZsq{}}
+                             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lot + bdms + fb + sty + drv + }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} 
+                             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rec + ffin + ghw + ca + gar + reg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+                         \PY{n}{data}\PY{o}{=}\PY{n}{houses}\PY{p}{)}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{p}{)}
+        \PY{n}{full\PYZus{}model}\PY{o}{.}\PY{n}{summary}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}3}]:} <class 'statsmodels.iolib.summary.Summary'>
+        """
+                                    OLS Regression Results                            
+        ==============================================================================
+        Dep. Variable:                   sell   R-squared:                       0.673
+        Model:                            OLS   Adj. R-squared:                  0.666
+        Method:                 Least Squares   F-statistic:                     99.97
+        Date:                Sat, 28 Nov 2015   Prob (F-statistic):          6.18e-122
+        Time:                        20:46:36   Log-Likelihood:                -6034.1
+        No. Observations:                 546   AIC:                         1.209e+04
+        Df Residuals:                     534   BIC:                         1.214e+04
+        Df Model:                          11                                         
+        Covariance Type:            nonrobust                                         
+        ==============================================================================
+                         coef    std err          t      P>|t|      [95.0\% Conf. Int.]
+        ------------------------------------------------------------------------------
+        Intercept  -4038.3504   3409.471     -1.184      0.237     -1.07e+04  2659.271
+        lot            3.5463      0.350     10.124      0.000         2.858     4.234
+        bdms        1832.0035   1047.000      1.750      0.081      -224.741  3888.748
+        fb          1.434e+04   1489.921      9.622      0.000      1.14e+04  1.73e+04
+        sty         6556.9457    925.290      7.086      0.000      4739.291  8374.600
+        drv         6687.7789   2045.246      3.270      0.001      2670.065  1.07e+04
+        rec         4511.2838   1899.958      2.374      0.018       778.976  8243.592
+        ffin        5452.3855   1588.024      3.433      0.001      2332.845  8571.926
+        ghw         1.283e+04   3217.597      3.988      0.000      6510.706  1.92e+04
+        ca          1.263e+04   1555.021      8.124      0.000      9578.182  1.57e+04
+        gar         4244.8290    840.544      5.050      0.000      2593.650  5896.008
+        reg         9369.5132   1669.091      5.614      0.000      6090.724  1.26e+04
+        ==============================================================================
+        Omnibus:                       93.454   Durbin-Watson:                   1.604
+        Prob(Omnibus):                  0.000   Jarque-Bera (JB):              247.620
+        Skew:                           0.853   Prob(JB):                     1.70e-54
+        Kurtosis:                       5.824   Cond. No.                     3.07e+04
+        ==============================================================================
+        
+        Warnings:
+        [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+        [2] The condition number is large, 3.07e+04. This might indicate that there are
+        strong multicollinearity or other numerical problems.
+        """
+\end{Verbatim}
+            
+    Almost all variables, except for \texttt{bdms}, are significant at 5\%
+level (\texttt{bdms} is significant at 10\% level)
+
+\(p\)-value for the Jarque-Bera test says that we cannot reject the
+hypothesis that residuals are distributed normally.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{n}{fitted} \PY{o}{=} \PY{n}{full\PYZus{}model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{p}{)}
+         \PY{n}{resid} \PY{o}{=} \PY{n}{full\PYZus{}model}\PY{o}{.}\PY{n}{resid}
+         
+         \PY{n}{g} \PY{o}{=} \PY{n}{sns}\PY{o}{.}\PY{n}{JointGrid}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{n}{fitted}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{n}{resid}\PY{p}{)}
+         \PY{n}{g}\PY{o}{.}\PY{n}{set\PYZus{}axis\PYZus{}labels}\PY{p}{(}\PY{n}{xlabel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fitted values}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ylabel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{residuals}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{n}{ax\PYZus{}joint} \PY{o}{=} \PY{n}{g}\PY{o}{.}\PY{n}{ax\PYZus{}joint}
+         \PY{n}{ax\PYZus{}joint}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{fitted}\PY{p}{,} \PY{n}{resid}\PY{p}{)}
+         \PY{n}{ax\PYZus{}joint}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+         
+         \PY{n}{sns}\PY{o}{.}\PY{n}{distplot}\PY{p}{(}\PY{n}{fitted}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{g}\PY{o}{.}\PY{n}{ax\PYZus{}marg\PYZus{}x}\PY{p}{)}
+         \PY{n}{sns}\PY{o}{.}\PY{n}{distplot}\PY{p}{(}\PY{n}{resid}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{g}\PY{o}{.}\PY{n}{ax\PYZus{}marg\PYZus{}y}\PY{p}{,} \PY{n}{fit}\PY{o}{=}\PY{n}{norm}\PY{p}{,} \PY{n}{vertical}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_7_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Even though the distributed of residuals looks normal (and JB test
+doesn't reject normality), it looks like the left tail of the
+distriburion is longer. So we need to try transforming the price
+variable.
+
+    \textbf{(b)} Now consider a linear model where the log of the sale price
+of the house is the dependent variable and the explanatory variables are
+as before. Perform again the test for linearity. What do you conclude
+now?
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k+kn}{from} \PY{n+nn}{numpy} \PY{k}{import} \PY{n}{log}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{full\PYZus{}model\PYZus{}log} \PY{o}{=} \PY{n}{ols}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log(sell) \PYZti{} }\PY{l+s+s1}{\PYZsq{}}
+                                 \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lot + bdms + fb + sty + drv + }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+}
+                                 \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rec + ffin + ghw + ca + gar + reg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+                             \PY{n}{data}\PY{o}{=}\PY{n}{houses}\PY{p}{)}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{p}{)}
+        \PY{n}{full\PYZus{}model\PYZus{}log}\PY{o}{.}\PY{n}{summary}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}6}]:} <class 'statsmodels.iolib.summary.Summary'>
+        """
+                                    OLS Regression Results                            
+        ==============================================================================
+        Dep. Variable:              log(sell)   R-squared:                       0.677
+        Model:                            OLS   Adj. R-squared:                  0.670
+        Method:                 Least Squares   F-statistic:                     101.6
+        Date:                Sat, 28 Nov 2015   Prob (F-statistic):          3.67e-123
+        Time:                        20:46:37   Log-Likelihood:                 73.873
+        No. Observations:                 546   AIC:                            -123.7
+        Df Residuals:                     534   BIC:                            -72.11
+        Df Model:                          11                                         
+        Covariance Type:            nonrobust                                         
+        ==============================================================================
+                         coef    std err          t      P>|t|      [95.0\% Conf. Int.]
+        ------------------------------------------------------------------------------
+        Intercept     10.0256      0.047    212.210      0.000         9.933    10.118
+        lot         5.057e-05   4.85e-06     10.418      0.000       4.1e-05  6.01e-05
+        bdms           0.0340      0.015      2.345      0.019         0.006     0.063
+        fb             0.1678      0.021      8.126      0.000         0.127     0.208
+        sty            0.0923      0.013      7.197      0.000         0.067     0.117
+        drv            0.1307      0.028      4.610      0.000         0.075     0.186
+        rec            0.0735      0.026      2.792      0.005         0.022     0.125
+        ffin           0.0994      0.022      4.517      0.000         0.056     0.143
+        ghw            0.1784      0.045      4.000      0.000         0.091     0.266
+        ca             0.1780      0.022      8.262      0.000         0.136     0.220
+        gar            0.0508      0.012      4.358      0.000         0.028     0.074
+        reg            0.1271      0.023      5.496      0.000         0.082     0.173
+        ==============================================================================
+        Omnibus:                        7.621   Durbin-Watson:                   1.510
+        Prob(Omnibus):                  0.022   Jarque-Bera (JB):                8.443
+        Skew:                          -0.199   Prob(JB):                       0.0147
+        Kurtosis:                       3.461   Cond. No.                     3.07e+04
+        ==============================================================================
+        
+        Warnings:
+        [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+        [2] The condition number is large, 3.07e+04. This might indicate that there are
+        strong multicollinearity or other numerical problems.
+        """
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{fitted} \PY{o}{=} \PY{n}{full\PYZus{}model\PYZus{}log}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{p}{)}
+        \PY{n}{resid} \PY{o}{=} \PY{n}{full\PYZus{}model\PYZus{}log}\PY{o}{.}\PY{n}{resid}
+        
+        \PY{n}{g} \PY{o}{=} \PY{n}{sns}\PY{o}{.}\PY{n}{JointGrid}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{n}{fitted}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{n}{resid}\PY{p}{)}
+        \PY{n}{g}\PY{o}{.}\PY{n}{set\PYZus{}axis\PYZus{}labels}\PY{p}{(}\PY{n}{xlabel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fitted values}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ylabel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{residuals}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+        \PY{n}{ax\PYZus{}joint} \PY{o}{=} \PY{n}{g}\PY{o}{.}\PY{n}{ax\PYZus{}joint}
+        \PY{n}{ax\PYZus{}joint}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{fitted}\PY{p}{,} \PY{n}{resid}\PY{p}{)}
+        \PY{n}{ax\PYZus{}joint}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+        
+        \PY{n}{sns}\PY{o}{.}\PY{n}{distplot}\PY{p}{(}\PY{n}{fitted}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{g}\PY{o}{.}\PY{n}{ax\PYZus{}marg\PYZus{}x}\PY{p}{)}
+        \PY{n}{sns}\PY{o}{.}\PY{n}{distplot}\PY{p}{(}\PY{n}{resid}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{g}\PY{o}{.}\PY{n}{ax\PYZus{}marg\PYZus{}y}\PY{p}{,} \PY{n}{fit}\PY{o}{=}\PY{n}{norm}\PY{p}{,} \PY{n}{vertical}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+        
+        \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_12_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Even though \(p\)-value for JB is smaller than for \textbf{(a)}, the
+plot suggests that the log transformation is better: the distribution of
+residuals doesn't have the long tail, and follows the fitted normal
+distribution closer than in \textbf{(a)}
+
+    \textbf{(c)} Continue with the linear model from question \textbf{(b)}.
+
+\begin{itemize}
+\tightlist
+\item
+  We now consider possible transformation of the lot size variable.
+\item
+  We can consider either the variable itself, or a log transformation of
+  this variable.
+\item
+  Which of these do you prefer? (Keep all other explanatory variables
+  included without transformation.)
+\end{itemize}
+
+    First, let's have a look at the distribution of this variable:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{8}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+        
+        \PY{n}{ax1} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+        \PY{n}{sns}\PY{o}{.}\PY{n}{distplot}\PY{p}{(}\PY{n}{houses}\PY{o}{.}\PY{n}{lot}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{ax1}\PY{p}{,} \PY{n}{axlabel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lot}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+        \PY{n}{ax2} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{sns}\PY{o}{.}\PY{n}{distplot}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{houses}\PY{o}{.}\PY{n}{lot}\PY{p}{)}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{ax2}\PY{p}{,} \PY{n}{axlabel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log lot}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+        \PY{n}{plt}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_16_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    The log transfrom seems to give a better (more "balanced") spread. Let
+us try fitting 2 OLS models, one with transformation, another without.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{n}{model\PYZus{}2a} \PY{o}{=} \PY{n}{ols}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log(sell) \PYZti{} }\PY{l+s+s1}{\PYZsq{}}
+                           \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lot + bdms + fb + sty + drv + }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+}
+                           \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rec + ffin + ghw + ca + gar + reg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+                       \PY{n}{data}\PY{o}{=}\PY{n}{houses}\PY{p}{)}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{p}{)}
+        \PY{n}{model\PYZus{}2b} \PY{o}{=} \PY{n}{ols}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log(sell) \PYZti{} }\PY{l+s+s1}{\PYZsq{}}
+                           \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log(lot) + bdms + fb + sty + drv + }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+}
+                           \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rec + ffin + ghw + ca + gar + reg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+                       \PY{n}{data}\PY{o}{=}\PY{n}{houses}\PY{p}{)}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{p}{)}
+        
+        \PY{n+nb}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{R2\PYZus{}a = }\PY{l+s+si}{\PYZpc{}0.4f}\PY{l+s+s1}{, AIC = }\PY{l+s+si}{\PYZpc{}0.4f}\PY{l+s+s1}{, BIC = }\PY{l+s+si}{\PYZpc{}0.4f}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PYZbs{}
+                \PY{p}{(}\PY{n}{model\PYZus{}2a}\PY{o}{.}\PY{n}{rsquared}\PY{p}{,} \PY{n}{model\PYZus{}2a}\PY{o}{.}\PY{n}{aic}\PY{p}{,} \PY{n}{model\PYZus{}2a}\PY{o}{.}\PY{n}{bic}\PY{p}{)}
+        \PY{n+nb}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{R2\PYZus{}b = }\PY{l+s+si}{\PYZpc{}0.4f}\PY{l+s+s1}{, AIC = }\PY{l+s+si}{\PYZpc{}0.4f}\PY{l+s+s1}{, BIC = }\PY{l+s+si}{\PYZpc{}0.4f}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PYZbs{}
+                \PY{p}{(}\PY{n}{model\PYZus{}2b}\PY{o}{.}\PY{n}{rsquared}\PY{p}{,} \PY{n}{model\PYZus{}2b}\PY{o}{.}\PY{n}{aic}\PY{p}{,} \PY{n}{model\PYZus{}2b}\PY{o}{.}\PY{n}{bic}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+R2\_a = 0.6766, AIC = -123.7462, BIC = -72.1148
+R2\_b = 0.6865, AIC = -140.8234, BIC = -89.1919
+
+    \end{Verbatim}
+
+    The model \textbf{2b} has higher (better) \(R^2\) and lower (better) AIC
+and BIC. So the model \textbf{2b} with log transformation of
+\texttt{lot} is better than \textbf{2a} without the transformation.
+
+    \textbf{(d)}
+
+\begin{itemize}
+\tightlist
+\item
+  We now consider interaction effects of the log lot size with the other
+  variables.
+\item
+  Construct these interaction variables.
+\item
+  How many are individually significant?
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{k}{def} \PY{n+nf}{summary}\PY{p}{(}\PY{n}{model}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}
+                      \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{coef}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{model}\PY{o}{.}\PY{n}{params}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{,} 
+                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}t\PYZdl{}\PYZhy{}value}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{model}\PY{o}{.}\PY{n}{tvalues}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{,}
+                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{SE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{model}\PY{o}{.}\PY{n}{bse}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{,}
+                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}p\PYZdl{}\PYZhy{}value}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{model}\PY{o}{.}\PY{n}{pvalues}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{,}
+                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{significance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{np}\PY{o}{.}\PY{n}{where}\PY{p}{(}\PY{n}{model}\PY{o}{.}\PY{n}{pvalues} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mf}{0.05}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{significant}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{not}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{\PYZcb{}}\PY{p}{,}
+                      \PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{coef}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{SE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}t\PYZdl{}\PYZhy{}value}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}p\PYZdl{}\PYZhy{}value}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{significance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    To construct the interaction variables, we consider additional variables
+that look like \(\log \text{lot} \times x_j\) where \(x_j\) is other
+variables, not \(\log \text{lot}\)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{model\PYZus{}d} \PY{o}{=} \PY{n}{ols}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log(sell) \PYZti{} }\PY{l+s+s1}{\PYZsq{}}
+                          \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log(lot) + bdms + fb + sty + drv + }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+}
+                          \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rec + ffin + ghw + ca + gar + reg + }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} 
+                          \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log(lot):bdms + log(lot):fb + log(lot):sty + }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} 
+                          \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log(lot):drv + log(lot):rec + log(lot):ffin + }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} 
+                          \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log(lot):ghw + log(lot):ca + log(lot):gar + }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} 
+                          \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log(lot):reg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{data}\PY{o}{=}\PY{n}{houses}\PY{p}{)}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{p}{)}  
+         \PY{n}{summary}\PY{p}{(}\PY{n}{model\PYZus{}d}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}11}]:}                  coef      SE  \$t\$-value  \$p\$-value significance
+         Intercept      8.9665  1.0707     8.3747     0.0000  significant
+         log(lot)       0.1527  0.1283     1.1901     0.2345          not
+         bdms           0.0191  0.3267     0.0584     0.9535          not
+         fb            -0.3682  0.4290    -0.8583     0.3911          not
+         sty            0.4889  0.3097     1.5786     0.1150          not
+         drv           -1.4634  0.7172    -2.0403     0.0418  significant
+         rec            1.6740  0.6559     2.5521     0.0110  significant
+         ffin          -0.0318  0.4455    -0.0715     0.9430          not
+         ghw           -0.5059  0.9027    -0.5604     0.5754          not
+         ca            -0.3403  0.4960    -0.6860     0.4930          not
+         gar            0.4019  0.2586     1.5540     0.1208          not
+         reg            0.1185  0.4799     0.2469     0.8051          not
+         log(lot):bdms  0.0021  0.0387     0.0535     0.9573          not
+         log(lot):fb    0.0620  0.0501     1.2371     0.2166          not
+         log(lot):sty  -0.0464  0.0359    -1.2899     0.1977          not
+         log(lot):drv   0.1915  0.0874     2.1925     0.0288  significant
+         log(lot):rec  -0.1885  0.0764    -2.4676     0.0139  significant
+         log(lot):ffin  0.0159  0.0529     0.3011     0.7635          not
+         log(lot):ghw   0.0811  0.1069     0.7588     0.4483          not
+         log(lot):ca    0.0595  0.0580     1.0263     0.3052          not
+         log(lot):gar  -0.0414  0.0301    -1.3721     0.1706          not
+         log(lot):reg   0.0015  0.0560     0.0271     0.9784          not
+\end{Verbatim}
+            
+    Now there are only 5 variables that are individually significant at 5\%
+level:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{model\PYZus{}d}\PY{o}{.}\PY{n}{pvalues}\PY{p}{[}\PY{n}{model\PYZus{}d}\PY{o}{.}\PY{n}{pvalues} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mf}{0.05}\PY{p}{]}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}12}]:} Intercept       0.0000
+         drv             0.0418
+         rec             0.0110
+         log(lot):drv    0.0288
+         log(lot):rec    0.0139
+         dtype: float64
+\end{Verbatim}
+            
+    \textbf{(e)} Perform an F-test for the joint significance of the
+interaction effects from question \textbf{(d)}.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{n}{model\PYZus{}d}\PY{o}{.}\PY{n}{f\PYZus{}test}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log(lot):bdms = log(lot):fb = log(lot):sty = }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} 
+                        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log(lot):drv = log(lot):rec = log(lot):ffin = }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} 
+                        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log(lot):ghw = log(lot):ca = log(lot):gar = }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} 
+                        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log(lot):reg = 0}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}13}]:} <class 'statsmodels.stats.contrast.ContrastResults'>
+         <F test: F=array([[ 1.47119505]]), p=0.146562197419, df\_denom=524, df\_num=10>
+\end{Verbatim}
+            
+    The interaction terms are \textbf{not} jointly significant at 5\% level.
+
+    \textbf{(f)} Now perform model specification on the interaction
+variables using the general-to-specific approach. (Only eliminate the
+interaction effects.)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{y}\PY{p}{,} \PY{n}{X} \PY{o}{=} \PY{n}{dmatrices}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log(sell) \PYZti{} }\PY{l+s+s1}{\PYZsq{}}
+                              \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log(lot) + bdms + fb + sty + drv + }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+}
+                              \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rec + ffin + ghw + ca + gar + reg + }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} 
+                              \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log(lot):bdms + log(lot):fb + log(lot):sty + }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} 
+                              \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log(lot):drv + log(lot):rec + log(lot):ffin + }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} 
+                              \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log(lot):ghw + log(lot):ca + log(lot):gar + }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} 
+                              \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log(lot):reg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{data}\PY{o}{=}\PY{n}{houses}\PY{p}{,} \PY{n}{return\PYZus{}type}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{dataframe}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{k}{def} \PY{n+nf}{backwards\PYZus{}elimination}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{X}\PY{p}{)}\PY{p}{:}
+             \PY{n}{interactions} \PY{o}{=} \PY{n+nb}{set}\PY{p}{(}\PY{n}{X}\PY{o}{.}\PY{n}{columns}\PY{p}{[}\PY{l+m+mi}{12}\PY{p}{:}\PY{p}{]}\PY{p}{)}
+             \PY{n}{step} \PY{o}{=} \PY{l+m+mi}{1}
+         
+             \PY{k}{while} \PY{n}{interactions}\PY{p}{:}
+                 \PY{n+nb}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{step \PYZsh{}}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{...}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{n}{step}
+                 \PY{n}{model} \PY{o}{=} \PY{n}{sm}\PY{o}{.}\PY{n}{OLS}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{X}\PY{p}{)}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{p}{)}
+                 \PY{n}{least\PYZus{}signigicant} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{pvalues}\PY{p}{[}\PY{l+m+mi}{12}\PY{p}{:}\PY{p}{]}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{p}{)}
+                 \PY{n}{p\PYZus{}value} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{pvalues}\PY{p}{[}\PY{n}{least\PYZus{}signigicant}\PY{p}{]}
+                 
+                 \PY{k}{if} \PY{n}{p\PYZus{}value} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mf}{0.05}\PY{p}{:}
+                     \PY{n+nb}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{all remaining variables are significant}\PY{l+s+s1}{\PYZsq{}}
+                     \PY{n+nb}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{remaining interaction terms: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{, }\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{interactions}\PY{p}{)}
+                     \PY{n+nb}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{the final model is }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s1}{ \PYZti{} }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{y}\PY{o}{.}\PY{n}{columns}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ + }\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{X}\PY{o}{.}\PY{n}{columns}\PY{p}{)}\PY{p}{)}
+         
+                 \PY{n+nb}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{variable }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s1}{ is least significant (p\PYZhy{}value = }\PY{l+s+si}{\PYZpc{}0.4f}\PY{l+s+s1}{), removing it}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{least\PYZus{}signigicant}\PY{p}{,} \PY{n}{p\PYZus{}value}\PY{p}{)}
+                 \PY{k}{del} \PY{n}{X}\PY{p}{[}\PY{n}{least\PYZus{}signigicant}\PY{p}{]}
+                 \PY{n}{interactions}\PY{o}{.}\PY{n}{remove}\PY{p}{(}\PY{n}{least\PYZus{}signigicant}\PY{p}{)}
+                 \PY{n}{step} \PY{o}{=} \PY{n}{step} \PY{o}{+} \PY{l+m+mi}{1}
+             \PY{k}{return} \PY{n}{model}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{model\PYZus{}f} \PY{o}{=} \PY{n}{backwards\PYZus{}elimination}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{X}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+step \#1{\ldots}
+variable log(lot):reg is least significant (p-value = 0.9784), removing it
+step \#2{\ldots}
+variable log(lot):bdms is least significant (p-value = 0.9582), removing it
+step \#3{\ldots}
+variable log(lot):ffin is least significant (p-value = 0.7434), removing it
+step \#4{\ldots}
+variable log(lot):ghw is least significant (p-value = 0.4370), removing it
+step \#5{\ldots}
+variable log(lot):ca is least significant (p-value = 0.3017), removing it
+step \#6{\ldots}
+variable log(lot):gar is least significant (p-value = 0.2448), removing it
+step \#7{\ldots}
+variable log(lot):fb is least significant (p-value = 0.1872), removing it
+step \#8{\ldots}
+variable log(lot):sty is least significant (p-value = 0.2906), removing it
+step \#9{\ldots}
+variable log(lot):drv is least significant (p-value = 0.0502), removing it
+step \#10{\ldots}
+all remaining variables are significant
+remaining interaction terms: log(lot):rec
+the final model is log(sell) \textasciitilde{} Intercept + log(lot) + bdms + fb + sty + drv + rec + ffin + ghw + ca + gar + reg + log(lot):rec
+variable log(lot):rec is least significant (p-value = 0.0273), removing it
+
+    \end{Verbatim}
+
+    So only one interaction term is significant - and it's the interaction
+with \texttt{rec}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{n}{summary}\PY{p}{(}\PY{n}{model\PYZus{}f}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}17}]:}                 coef      SE  \$t\$-value  \$p\$-value significance
+         Intercept     7.5907  0.2266    33.5046     0.0000  significant
+         log(lot)      0.3202  0.0277    11.5619     0.0000  significant
+         bdms          0.0384  0.0143     2.6797     0.0076  significant
+         fb            0.1632  0.0203     8.0431     0.0000  significant
+         sty           0.0908  0.0126     7.2203     0.0000  significant
+         drv           0.1131  0.0282     4.0177     0.0001  significant
+         rec           1.4431  0.6265     2.3036     0.0216  significant
+         ffin          0.1045  0.0216     4.8350     0.0000  significant
+         ghw           0.1843  0.0438     4.2076     0.0000  significant
+         ca            0.1659  0.0213     7.8041     0.0000  significant
+         gar           0.0481  0.0114     4.2062     0.0000  significant
+         reg           0.1337  0.0226     5.9165     0.0000  significant
+         log(lot):rec -0.1611  0.0728    -2.2130     0.0273  significant
+\end{Verbatim}
+            
+    \textbf{(g)}
+
+One may argue that some of the explanatory variables are endogenous and
+that there may be omitted variables.
+
+For example, the `condition' of the house in terms of how it is
+maintained is not a variable (and difficult to measure) but will affect
+the house price. It will also affect, or be reflected in, some of the
+other variables, such as whether the house has an air conditioning
+(which is mostly in newer houses).
+
+If the condition of the house is missing, will the effect of air
+conditioning on the (log of the) sale price be over- or underestimated?
+
+(For this question no computer calculations are required.)
+
+    \begin{itemize}
+\tightlist
+\item
+  good condition will typically increase chances of having AC
+\item
+  good condition will also increase the price
+\end{itemize}
+
+So if AC is endogenous because of missing \texttt{condition}, it will
+cause over-estimation of the effect of AC
+
+    \textbf{(h)}
+
+Finally we analyze the predictive ability of the model.
+
+Consider again the model where
+
+\begin{itemize}
+\tightlist
+\item
+  the log of the sale price of the house is the dependent variable and
+\item
+  the explanatory variables are the log transformation of lot size, with
+  all other explanatory variables in their original form (and no
+  interaction effects).
+\end{itemize}
+
+Do:
+
+\begin{itemize}
+\tightlist
+\item
+  Estimate the parameters of the model using the first 400 observations.
+\item
+  Make predictions on the log of the price and calculate the MAE for the
+  other 146 observations.
+\end{itemize}
+
+How good is the predictive power of the model (relative to the
+variability in the log of the price)?
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{n}{train} \PY{o}{=} \PY{n}{houses}\PY{o}{.}\PY{n}{obs} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{400}
+         \PY{n}{test} \PY{o}{=} \PY{o}{\PYZti{}}\PY{n}{train}
+         
+         \PY{n+nb}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sizes: training set = }\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{, testing set = }\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n+nb}{sum}\PY{p}{(}\PY{n}{train}\PY{p}{)}\PY{p}{,} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{test}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+sizes: training set = 400, testing set = 146
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{n}{model\PYZus{}h} \PY{o}{=} \PY{n}{ols}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log(sell) \PYZti{} }\PY{l+s+s1}{\PYZsq{}}
+                            \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lot + bdms + fb + sty + drv + }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+}
+                            \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rec + ffin + ghw + ca + gar + reg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+                       \PY{n}{data}\PY{o}{=}\PY{n}{houses}\PY{p}{[}\PY{n}{train}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n}{predicted} \PY{o}{=} \PY{n}{model\PYZus{}h}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{houses}\PY{p}{[}\PY{n}{test}\PY{p}{]}\PY{p}{)}
+         \PY{n}{actual} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{houses}\PY{p}{[}\PY{n}{test}\PY{p}{]}\PY{o}{.}\PY{n}{sell}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{predicted}\PY{p}{,} \PY{n}{actual}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{12}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{12}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{predicted}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlim}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{10.5}\PY{p}{,} \PY{l+m+mi}{12}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actual}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylim}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{10.5}\PY{p}{,} \PY{l+m+mi}{12}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_40_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{7}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}
+         \PY{n}{sns}\PY{o}{.}\PY{n}{distplot}\PY{p}{(}\PY{n}{actual} \PY{o}{\PYZhy{}} \PY{n}{predicted}\PY{p}{,} \PY{n}{fit}\PY{o}{=}\PY{n}{norm}\PY{p}{,} \PY{n}{axlabel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{test set redisuals}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlim}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_41_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{n}{sm}\PY{o}{.}\PY{n}{OLS}\PY{p}{(}\PY{n}{actual}\PY{p}{,} \PY{n}{predicted}\PY{p}{)}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{rsquared}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}22}]:} 0.99973576194198166
+\end{Verbatim}
+            
+    The model does pretty well: predicted and actual values are almost on
+the same line (\(R^2 = 0.99\))
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{k}{def} \PY{n+nf}{mae}\PY{p}{(}\PY{n}{real}\PY{p}{,} \PY{n}{predicted}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{real} \PY{o}{\PYZhy{}} \PY{n}{predicted}\PY{p}{)}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} \PY{n}{mae}\PY{p}{(}\PY{n}{actual}\PY{p}{,} \PY{n}{predicted}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}24}]:} 0.13735361395857656
+\end{Verbatim}
+            
+    Mean absolute error is 0.14
+
+Let's also see what is MAE in the usual domain, not in the log
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}25}]:} \PY{n}{mae}\PY{p}{(}\PY{n}{houses}\PY{p}{[}\PY{n}{test}\PY{p}{]}\PY{o}{.}\PY{n}{sell}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{n}{predicted}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}25}]:} 10367.409234357474
+\end{Verbatim}
+            
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
